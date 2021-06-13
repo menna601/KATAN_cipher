@@ -30,6 +30,15 @@ const uint32_t y_32[6] = { 18, 7, 12, 10, 8, 3 };
 const uint64_t x_64[5] = { 24, 15, 20, 11, 9 };
 const uint64_t y_64[6] = { 38, 25, 33, 21, 14, 9 };
 
+void system_32(string);
+void hexToInt_32(string, uint32_t[]);
+void intToBit_32(uint32_t, uint32_t[]);
+void katan32_encrypt(const uint32_t[], uint32_t[], const uint32_t[]);
+void system_64(string );
+void hexToInt_64(string, uint64_t[]);
+void intToBit_64(uint64_t, uint64_t[]);
+void katan64_encrypt(const uint64_t[], uint64_t[], const uint64_t[]);
+
 // 8-bit LFSR counter 
 void generateIRArray() {
 	// Initailized with ones
@@ -55,14 +64,70 @@ void generateIRArray() {
 		IR_64[i] = IR_32[i];
 }
 
-// Convert any number into binary bits and store each bit in the array
-void intToBit_32(uint32_t n, uint32_t array[]) {
-	for (int i = 0; i < 4; i++) {
-		array[counter_32] = n % 2;
-		n /= 2;
-		counter_32++;
+void system_32(string key) {
+
+	string plain = "";
+
+	string subPlain;
+
+	// If key is less than 20-hex values ----> the rest will be filled with 0s
+	if (key.length() != 20)
+		for (uint32_t i = 0; i < plain.length() % 20; i++)
+			plain.insert(i, "0");
+	//Construct keyArray based on the hex values passed
+	hexToInt_32(key, keyArray_32);
+	// Reset the counter
+	counter_32 = 0;
+
+	cout << "***hint*** if the plaintext is not divisible by 8 --> the rest will be filled with 0s ***hint***" << endl;
+	cout << "Enter plaintext: ";
+	cin >> plain;
+	cout << "------------------------------------------------------------------------" << endl;
+
+	// Ensure that the plaintext can be divided into 8-bit blocks
+	// if not --> fill the last block with 0s till it's 8 bits
+	if (plain.length() % 8 != 0)
+		for (uint32_t i = 0; i < plain.length() % 8; i++)
+			plain.insert(i, "0");
+
+	//Initialize the block with any values
+	subPlain = "00000000";
+
+	/*
+	* strCounter: helps to determine the start and the end of each block to be encrypted
+	* cipherInteger: helps to represent the cipher block as hex value
+	* blockCounter: counts the blocks
+	*/
+	uint32_t strCounter_32 = plain.length() - 1;
+	uint32_t cipherInteger_32, blockCounter_32 = 1;
+
+	cout << "BLOCK#\tPLAIN\t\tCIPHER" << endl;
+	//Loops over the plain text
+	while (strCounter_32 != -1) {
+		// Get the block hex value
+		for (int i = 7; i >= 0; i--) {
+			subPlain[i] = plain[strCounter_32];
+			strCounter_32--;
+		}
+
+		//Construct plainText block based on the hex values passed
+		hexToInt_32(subPlain, plainText_32);
+		// Reset the counter
+		counter_32 = 0;
+
+		// Start the enc.
+		katan32_encrypt(plainText_32, cipherText_32, keyArray_32);
+
+		cipherInteger_32 = 0;
+		for (uint32_t i = 0; i < 32; i++) {
+			cipherInteger_32 += (1 << i) * cipherText_32[i];
+		}
+
+		cout << blockCounter_32 << "\t" << subPlain << "\t" << hex << cipherInteger_32 << endl;
+		blockCounter_32++;
 	}
 }
+
 // Convert the hex value stored in a string into an integer value
 void hexToInt_32(string st, uint32_t array[]) {
 	uint32_t integer = 0;
@@ -91,37 +156,11 @@ void hexToInt_32(string st, uint32_t array[]) {
 }
 
 // Convert any number into binary bits and store each bit in the array
-void intToBit_64(uint64_t n, uint64_t array[]) {
+void intToBit_32(uint32_t n, uint32_t array[]) {
 	for (int i = 0; i < 4; i++) {
-		array[counter_64] = n % 2;
+		array[counter_32] = n % 2;
 		n /= 2;
-		counter_64++;
-	}
-}
-// Convert the hex value stored in a string into an integer value
-void hexToInt_64(string st, uint64_t array[]) {
-	uint64_t integer = 0;
-
-	// For loop starting from the end of the string and counting down
-	for (uint64_t i = st.length() - 1; i >= 0; i--) {
-		if (st[i] >= '0' && st[i] <= '9') {
-			integer = st[i] - (uint64_t)'0';
-			intToBit_64(integer, array);
-		}
-		else if (st[i] >= 'a' && st[i] <= 'f') {
-			integer = st[i] - (uint64_t)'a' + 10;
-			intToBit_64(integer, array);
-		}
-		// Skip the entered spaces
-		else if (st[i] == ' ')
-			continue;
-		// if char is not [0-9] or [a-f] or a space --> error
-		else {
-			cout << "error: " << st[i] << " in position " << i + 1 << " is incorrect" << endl;
-		}
-		if (i == 0)
-			break;
-
+		counter_32++;
 	}
 }
 
@@ -180,6 +219,109 @@ void katan32_encrypt(const uint32_t plain[32], uint32_t cipher[32], const uint32
 		cipher[i + 19] = L1[i];
 }
 
+/*********************************************************************************************************/
+void system_64(string key) {
+	string plain = "";
+	string subPlain;
+
+	if (key.length() != 20)
+		for (uint64_t i = 0; i < (uint64_t)(plain.length() % 20); i++)
+		{
+			plain.insert(i, "0");
+		}
+	//Construct keyArray based on the hex values passed
+	hexToInt_64(key, keyArray_64);
+	// Reset the counter
+	counter_64 = 0;
+
+	cout << "***hint*** if the plaintext is not divisible by 16 --> the rest will be filled with 0s ***hint***" << endl;
+	cout << "Enter plaintext: ";
+	cin >> plain;
+	cout << "------------------------------------------------------------------------" << endl;
+
+	// Ensure that the plaintext can be divided into 16-bit blocks
+	// if not --> fill the last block with 0s till it's 16 bits
+
+	if (plain.length() % 16 != 0)
+		for (uint64_t i = 0; i < plain.length() % 16; i++)
+			plain.insert(i, "0");
+
+	//Initialize the block with any values
+	subPlain = "0000000000000000";
+
+	/*
+	* strCounter: helps to determine the start and the end of each block to be encrypted
+	* cipherInteger: helps to represent the cipher block as hex value
+	* blockCounter: counts the blocks
+	*/
+	uint64_t strCounter_64 = plain.length() - 1;
+	uint64_t cipherInteger_64, blockCounter_64 = 1;
+
+	cout << "BLOCK#\tPLAIN\t\t\tCIPHER" << endl;
+	//Loops over the plain text
+	while (strCounter_64 != -1) {
+		// Get the block hex value
+
+		for (int i = 15; i >= 0; i--) {
+			subPlain[i] = plain[strCounter_64];
+			strCounter_64--;
+		}
+
+		//Construct plainText block based on the hex values passed
+		hexToInt_64(subPlain, plainText_64);
+
+		// Reset the counter
+		counter_64 = 0;
+
+		// Start the enc.
+		katan64_encrypt(plainText_64, cipherText_64, keyArray_64);
+
+		cipherInteger_64 = 0;
+		for (uint64_t i = 0; i < 64; i++) {
+			cipherInteger_64 += ((uint64_t)1 << i) * cipherText_64[i];
+		}
+		cout << blockCounter_64 << "\t" << subPlain << "\t" << hex << cipherInteger_64 << endl;
+		blockCounter_64++;
+	}
+}
+
+// Convert the hex value stored in a string into an integer value
+void hexToInt_64(string st, uint64_t array[]) {
+	uint64_t integer = 0;
+
+	// For loop starting from the end of the string and counting down
+	for (uint64_t i = st.length() - 1; i >= 0; i--) {
+		if (st[i] >= '0' && st[i] <= '9') {
+			integer = st[i] - (uint64_t)'0';
+			intToBit_64(integer, array);
+		}
+		else if (st[i] >= 'a' && st[i] <= 'f') {
+			integer = st[i] - (uint64_t)'a' + 10;
+			intToBit_64(integer, array);
+		}
+		// Skip the entered spaces
+		else if (st[i] == ' ')
+			continue;
+		// if char is not [0-9] or [a-f] or a space --> error
+		else {
+			cout << "error: " << st[i] << " in position " << i + 1 << " is incorrect" << endl;
+		}
+		if (i == 0)
+			break;
+
+	}
+}
+
+// Convert any number into binary bits and store each bit in the array
+void intToBit_64(uint64_t n, uint64_t array[]) {
+	for (int i = 0; i < 4; i++) {
+		array[counter_64] = n % 2;
+		n /= 2;
+		counter_64++;
+	}
+}
+
+
 void katan64_encrypt(const uint64_t plain[64], uint64_t cipher[64], const uint64_t key[80]) {
 
 	uint64_t L1[25], L2[39], k[2 * 254], fa_2, fa_1, fa_0, fb_2, fb_1, fb_0;
@@ -223,10 +365,9 @@ void katan64_encrypt(const uint64_t plain[64], uint64_t cipher[64], const uint64
 
 }
 
+
 int main() {
-	string plain = "";
 	string key = "";
-	string subPlain;
 	int systemType;
 
 
@@ -244,129 +385,14 @@ int main() {
 	cin >> systemType;
 	switch (systemType)
 	{
-	case 1: {
-		// If key is less than 20-hex values ----> the rest will be filled with 0s
-		if (key.length() != 20)
-			for (uint32_t i = 0; i < plain.length() % 20; i++)
-				plain.insert(i, "0");
-		//Construct keyArray based on the hex values passed
-		hexToInt_32(key, keyArray_32);
-		// Reset the counter
-		counter_32 = 0;
-
-		cout << "***hint*** if the plaintext is not divisible by 8 --> the rest will be filled with 0s ***hint***" << endl;
-		cout << "Enter plaintext: ";
-		cin >> plain;
-		cout << "------------------------------------------------------------------------" << endl;
-
-		// Ensure that the plaintext can be divided into 8-bit blocks
-		// if not --> fill the last block with 0s till it's 8 bits
-		if (plain.length() % 8 != 0)
-			for (uint32_t i = 0; i < plain.length() % 8; i++)
-				plain.insert(i, "0");
-
-		//Initialize the block with any values
-		subPlain = "00000000";
-
-		/*
-		* strCounter: helps to determine the start and the end of each block to be encrypted
-		* cipherInteger: helps to represent the cipher block as hex value
-		* blockCounter: counts the blocks
-		*/
-		uint32_t strCounter_32 = plain.length() - 1;
-		uint32_t cipherInteger_32, blockCounter_32 = 1;
-
-		cout << "BLOCK#\tPLAIN\t\tCIPHER" << endl;
-		//Loops over the plain text
-		while (strCounter_32 != -1) {
-			// Get the block hex value
-			for (int i = 7; i >= 0; i--) {
-				subPlain[i] = plain[strCounter_32];
-				strCounter_32--;
-			}
-
-			//Construct plainText block based on the hex values passed
-			hexToInt_32(subPlain, plainText_32);
-			// Reset the counter
-			counter_32 = 0;
-
-			// Start the enc.
-			katan32_encrypt(plainText_32, cipherText_32, keyArray_32);
-
-			cipherInteger_32 = 0;
-			for (uint32_t i = 0; i < 32; i++) {
-				cipherInteger_32 += (1 << i) * cipherText_32[i];
-			}
-
-			cout << blockCounter_32 << "\t" << subPlain << "\t" << hex << cipherInteger_32 << endl;
-			blockCounter_32++;
-		}
+	case 1: 
+		system_32(key);
 		break;
-	}
 
 	case 2:
-	{
-		if (key.length() != 20)
-			for (uint64_t i = 0; i < (uint64_t)(plain.length() % 20); i++)
-			{
-				plain.insert(i, "0");
-			}
-		//Construct keyArray based on the hex values passed
-		hexToInt_64(key, keyArray_64);
-		// Reset the counter
-		counter_64 = 0;
-
-		cout << "***hint*** if the plaintext is not divisible by 16 --> the rest will be filled with 0s ***hint***" << endl;
-		cout << "Enter plaintext: ";
-		cin >> plain;
-		cout << "------------------------------------------------------------------------" << endl;
-
-		// Ensure that the plaintext can be divided into 16-bit blocks
-		// if not --> fill the last block with 0s till it's 16 bits
-
-		if (plain.length() % 16 != 0)
-			for (uint64_t i = 0; i < plain.length() % 16; i++)
-				plain.insert(i, "0");
-
-		//Initialize the block with any values
-		subPlain = "0000000000000000";
-
-		/*
-		* strCounter: helps to determine the start and the end of each block to be encrypted
-		* cipherInteger: helps to represent the cipher block as hex value
-		* blockCounter: counts the blocks
-		*/
-		uint64_t strCounter_64 = plain.length() - 1;
-		uint64_t cipherInteger_64, blockCounter_64 = 1;
-
-		cout << "BLOCK#\tPLAIN\t\t\tCIPHER" << endl;
-		//Loops over the plain text
-		while (strCounter_64 != -1) {
-			// Get the block hex value
-
-			for (int i = 15; i >= 0; i--) {
-				subPlain[i] = plain[strCounter_64];
-				strCounter_64--;
-			}
-
-			//Construct plainText block based on the hex values passed
-			hexToInt_64(subPlain, plainText_64);
-
-			// Reset the counter
-			counter_64 = 0;
-
-			// Start the enc.
-			katan64_encrypt(plainText_64, cipherText_64, keyArray_64);
-
-			cipherInteger_64 = 0;
-			for (uint64_t i = 0; i < 64; i++) {
-				cipherInteger_64 += ((uint64_t)1 << i) * cipherText_64[i];
-			}
-			cout << blockCounter_64 << "\t" << subPlain << "\t" << hex << cipherInteger_64 << endl;
-			blockCounter_64++;
-		}
-	}
+		system_64(key);
 		break;
+
 	default:
 		break;
 	}
