@@ -1,13 +1,15 @@
 ﻿  cipher.cpp
-D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\cipher.cpp(230,17): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\cipher.cpp(247,17): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\cipher.cpp(266,24): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\cipher.cpp(294,10): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\cipher.cpp(294,26): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\cipher.cpp(295,17): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\cipher.cpp(298,15): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\cipher.cpp(298,31): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\cipher.cpp(299,17): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\cipher.cpp(303,15): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\cipher.cpp(307,28): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+  enc.cpp
+D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\enc.cpp(226,17): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\enc.cpp(243,17): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\enc.cpp(262,24): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\enc.cpp(289,10): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\enc.cpp(289,26): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\enc.cpp(290,17): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\enc.cpp(293,15): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\enc.cpp(293,31): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\enc.cpp(294,17): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\enc.cpp(298,15): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\enc.cpp(302,28): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+  Generating Code...
   KATAN_cipher.vcxproj -> D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\Debug\KATAN_cipher.exe
