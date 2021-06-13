@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cipher.cpp">
+    <ClCompile Include="enc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="enc.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
