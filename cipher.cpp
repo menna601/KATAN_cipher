@@ -11,10 +11,10 @@ using namespace std;
 * counter: is used as a counter for different arrays
 */
 uint32_t IR_32[254];
-uint32_t plainText[32];
-uint32_t cipherText[32];
-uint32_t keyArray[80];
-uint32_t counter = 0;
+uint32_t plainText_32[32];
+uint32_t cipherText_32[32];
+uint32_t keyArray_32[80];
+uint32_t counter_32 = 0;
 
 uint64_t IR_64[254];
 uint64_t plainText_64[64];
@@ -57,9 +57,9 @@ void generateIRArray() {
 // Convert any number into binary bits and store each bit in the array
 void intToBit(uint64_t n, uint64_t array[]) {
 	for (int i = 0; i < 4; i++) {
-		array[counter] = n % 2;
+		array[counter_64] = n % 2;
 		n /= 2;
-		counter++;
+		counter_64++;
 	}
 }
 // Convert the hex value stored in a string into an integer value
@@ -213,7 +213,7 @@ int main() {
 	//Construct keyArray based on the hex values passed
 	hexToInt(key, keyArray_64);
 	// Reset the counter
-	counter = 0;
+	counter_32 = 0;
 	counter_64 = 0;
 
 	cout << "***hint*** if the plaintext is not divisible by 8 --> the rest will be filled with 0s ***hint***" << endl;
@@ -259,7 +259,7 @@ int main() {
 		hexToInt(subPlain, plainText_64);
 
 		// Reset the counter
-		counter =  0;
+		counter_32 =  0;
 		counter_64 = 0;
 		// Start the enc.
 		//katan32_encrypt(plainText, cipherText, keyArray);

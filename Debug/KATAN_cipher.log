@@ -10,4 +10,5 @@ D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\cipher.cpp(84,28): warning C
 D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\cipher.cpp(210,17): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
 D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\cipher.cpp(232,17): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
 D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\cipher.cpp(254,24): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+  LINK : D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\Debug\KATAN_cipher.exe not found or not built by the last incremental link; performing full link
   KATAN_cipher.vcxproj -> D:\ASU_ENG\Spring2021\security\project\KATAN_cipher\Debug\KATAN_cipher.exe
